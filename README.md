@@ -46,11 +46,65 @@ Whenever M1 and M2 are added, we will replace the one with lower index in the co
 iteration. We keep doing it until the last column contains only one 1 and the rest are 5s. After
 finishing the iteration, the result can be seen in the diagram below.
 
+<img src="img5.png" width="600" height="400">
 
+Then this is the crucial part because we are assigning the binary code. In this part, we use a for
+loop and a while loop. The for loop is used to run through each of the rows and the while loop to
+run from first column to the last column. We also have a 2x5 matrix to store the binary code
 
+In the first Iteration of for loop, the current location(green) would be 0.1.
 
+<img src="img6.png" width="600" height="400">
 
+While current location is not at the last column, it will iterate two steps to the right. There are 3
+scenarios;
 
+(1) if the current location is the same as the previous location
+● Do nothing
+(2) if the current location is 5
+● Concat number in column-1 to binary matrix, identify the higher index between the
+minimum and second minimum in column-2 and move current location to that index in
+the same column.
+(3) if the current location is not the same as the previous location.
+● Concat number in column-1 to binary matrix and stay at the same location
+
+But let’s just follow one step at a time for now. From the current location it goes to the next 2
+columns in the same row. As can be seen below, now the current location(green) is 5. This is the
+scenario (2). Concat the number in column-1 to the binary matrix. Then, look at column-2 and
+pick the highest index between minimum and second minimum. Move the current location to
+that index in the same column.
+
+<img src="img7.png" width="600" height="400">
+
+Repeat the while loop process and move to column+2. It is a 5, so it is the same process as
+before. Concat the number in column-1 to the binary matrix. So, look at column-2 and pick the
+highest index between minimum and second minimum. Then, move the current location to that
+index in the same column.
+
+<img src="img8.png" width="600" height="400">
+
+Now, we move the current location to column+2. It is 0.41. It is the same number as column-2.
+This is scenario (1). So ignore the 5 in column-1 and move to column+2 for the next step.
+
+<img src="img9.png" width="600" height="400">
+
+Now that it reaches the last column, the while loop breaks and the code runs the second iteration
+of the for loop. Eventually, we get the result as shown below.
+
+<img src="img10.png" width="600" height="400">
+
+Note that this is not the final result. In regular Huffman code, we read the tree from top to
+bottom. In our case, we read it from bottom to top. So, we just need to flip the result and we have
+the Huffman code.
+
+<img src="img11.png" width="600" height="400">
+
+After generating this encoding, we then have to read through the original data, match each value
+with its corresponding Huffman code, and then write that code into the binary file as a binary
+number. We ensure that all the bits are stored in order by specifying a big-endian format in the
+fwrite function.
+If the original data file is called XXX.mat, then the PMF file is called XXX-PMF.mat, and the
+binary file is called XXX.bin. The PMF is stored in an array called originalArray.
 
 
 
